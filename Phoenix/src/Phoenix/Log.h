@@ -34,3 +34,4 @@ namespace Phoenix {
 #define PHX_WARN(...) ::Phoenix::Log::GetClientLogger()->warn(__VA_ARGS__)
 #define PHX_ERROR(...) ::Phoenix::Log::GetClientLogger()->error(__VA_ARGS__)
 #define PHX_FATAL(...) ::Phoenix::Log::GetClientLogger()->fatal(__VA_ARGS__)
+
