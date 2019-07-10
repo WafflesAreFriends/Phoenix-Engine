@@ -1,4 +1,8 @@
 #include "Application.h"
+#include "Phoenix/Events/ApplicationEvent.h"
+#include "Phoenix/Log.h"
+
+
 #include <iostream>
 
 using namespace std;
@@ -15,9 +19,9 @@ namespace Phoenix {
 	}
 
 	void Application::Run() {
-		while (true) {
-
-		}
+		WindowResizeEvent e(1200, 720);
+		PHX_TRACE(e);
+	
+		while (true);
 	}
-
 }
