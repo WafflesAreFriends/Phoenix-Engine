@@ -34,6 +34,9 @@
     <ClInclude Include="src\Phoenix\Log.h">
       <Filter>Phoenix</Filter>
     </ClInclude>
+    <ClInclude Include="src\pcheaders.h" />
+    <ClInclude Include="src\Phoenix\Window.h" />
+    <ClInclude Include="src\Platform\WINWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Phoenix\Application.cpp">
@@ -42,5 +45,7 @@
     <ClCompile Include="src\Phoenix\Log.cpp">
       <Filter>Phoenix</Filter>
     </ClCompile>
+    <ClCompile Include="src\pcheaders.cpp" />
+    <ClCompile Include="src\Platform\WINWindow.cpp" />
   </ItemGroup>
 </Project>

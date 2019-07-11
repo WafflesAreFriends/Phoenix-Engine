@@ -7,8 +7,7 @@ extern Phoenix::Application* Phoenix::CreateApplication();
 int main(int argc, char** argv) {
 
 	Phoenix::Log::Init();
-	PHX_CORE_WARN("Initialized Log!");
-	PHX_CORE_TRACE("Hello!");
+	PHX_CORE_WARN("Initialized Log.");
 
 	Phoenix::Application* app = Phoenix::CreateApplication();
 	app->Run();

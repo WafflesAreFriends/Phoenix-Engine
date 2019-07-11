@@ -2,9 +2,6 @@
 
 #include "Phoenix/Core.h"
 
-#include <string>
-#include <functional>
-
 namespace Phoenix {
 
 	// Currently blocking events. Better strategy to buffer events in an event bus

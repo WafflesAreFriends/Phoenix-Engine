@@ -11,6 +11,11 @@ workspace "Phoenix"
 	
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 	
+IncludeDir = {}
+IncludeDir["GLFW"] = "Phoenix/vendor/GLFW/include"
+
+include "Phoenix/vendor/GLFW"	
+
 project "Phoenix"
 	location "Phoenix"
 	kind "SharedLib"
@@ -18,6 +23,9 @@ project "Phoenix"
 	
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/"..outputdir.."/%{prj.name}")
+	
+	pchheader "pcheaders.h"
+	pchsource "Phoenix/src/pcheaders.cpp"
 	
 	files
 	{
@@ -28,7 +36,14 @@ project "Phoenix"
 	includedirs
 	{
 		"%{prj.name}/src",
-		"%{prj.name}/vendor/spdlog/include"
+		"%{prj.name}/vendor/spdlog/include",
+		"%{IncludeDir.GLFW}"
+	}
+	
+	links
+	{
+		"GLFW",
+		"opengl32.lib"
 	}
 	
 	filter "system:windows"
