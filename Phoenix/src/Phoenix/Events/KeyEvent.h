@@ -46,5 +46,6 @@ namespace Phoenix {
 			return ss.str();
 		}
 
+		EVENT_CLASS_TYPE(KeyReleased)
 	};
 }

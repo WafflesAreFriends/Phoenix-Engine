@@ -11,7 +11,7 @@ namespace Phoenix {
 		inline float GetX() const { return posX; }
 		inline float GetY() const { return posY; }
 
-		std::string ToString() {
+		std::string ToString() const override {
 			std::stringstream ss;
 			ss << "MouseMovedEvent: " << "Mouse at (" << posX << ", " << posY << ")";
 			return ss.str();
