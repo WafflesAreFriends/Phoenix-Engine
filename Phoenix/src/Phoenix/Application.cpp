@@ -20,11 +20,25 @@ namespace Phoenix {
 
 	}
 
+	void Application::PushLayer(Layer* layer) {
+		layerStack.PushLayer(layer);
+	}
+
+	void Application::PushOverlay(Layer* overlay) {
+		layerStack.PushOverlay(overlay);
+	}
+
 	void Application::OnEvent(Event& event) {
 		EventDispatcher eventDispatcher(event);
 		eventDispatcher.Dispatch<WindowCloseEvent>(BIND_FN_TO_EVENT(OnWindowClose));
 
-		PHX_CORE_TRACE("{0}", event);
+	//	PHX_CORE_TRACE("{0}", event);
+
+		for (auto i = layerStack.end(); i != layerStack.begin();) {
+			(*--i)->OnEvent(event);
+			if (event.IsHandled())
+				break;
+		}
 	}
 
 	void Application::Run() {
@@ -32,6 +46,9 @@ namespace Phoenix {
 			glClearColor(0, 0.5, 1, 0);
 			glClear(GL_COLOR_BUFFER_BIT);
 			window->OnUpdate();
+			for (Layer* layer : layerStack) {
+				layer->OnUpdate();
+			}
 		}
 	}
 

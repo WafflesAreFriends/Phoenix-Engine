@@ -39,6 +39,7 @@ namespace Phoenix {
 		virtual std::string ToString() const { return GetName(); }
 
 		inline bool IsInCategory(EventCategory category) { return GetCategoryFlags() & category; }
+		inline bool IsHandled() const { return handled; }
 
 	protected:
 		bool handled = false;
