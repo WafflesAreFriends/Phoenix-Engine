@@ -3,7 +3,7 @@
 
 #include "Phoenix/Log.h"
 
-#include <GLFW/glfw3.h>
+#include <glad/glad.h>
 
 using namespace std;
 
@@ -11,9 +11,16 @@ namespace Phoenix {
 
 #define BIND_FN_TO_EVENT(x) std::bind(&Application::x, this, std::placeholders::_1)
 
+
+	Application* Application::instance = nullptr;
+
 	Application::Application() {
+		PHX_CORE_ASSERT(instance, "Application exists!");
+		instance = this;
+
 		window = std::unique_ptr<Window>(Window::Create());
 		window->SetEventCallback(BIND_FN_TO_EVENT(OnEvent));
+
 	}
 
 	Application::~Application() {
@@ -22,10 +29,12 @@ namespace Phoenix {
 
 	void Application::PushLayer(Layer* layer) {
 		layerStack.PushLayer(layer);
+		layer->OnAttach();
 	}
 
 	void Application::PushOverlay(Layer* overlay) {
 		layerStack.PushOverlay(overlay);
+		overlay->OnAttach();
 	}
 
 	void Application::OnEvent(Event& event) {
@@ -45,10 +54,10 @@ namespace Phoenix {
 		while (running) {
 			glClearColor(0, 0.5, 1, 0);
 			glClear(GL_COLOR_BUFFER_BIT);
-			window->OnUpdate();
 			for (Layer* layer : layerStack) {
 				layer->OnUpdate();
 			}
+			window->OnUpdate();
 		}
 	}
 

@@ -19,6 +19,10 @@ namespace Phoenix {
 		inline void SetEventCallback(const EventCallbackFn& callback) override { data.eventCallback = callback; }
 		void SetVSync(bool enabled) override;
 		bool IsVSync() const override;
+
+		GLFWwindow* GetInstance() const {
+			return window;
+		}
 	private:
 		virtual void Init(const WindowProps& props);
 		virtual void Shutdown();

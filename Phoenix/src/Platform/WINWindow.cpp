@@ -6,6 +6,8 @@
 #include "Phoenix/Events/KeyEvent.h"
 #include "Phoenix/Events/MouseEvent.h"
 
+#include <glad/glad.h>
+
 namespace Phoenix {
 
 	static bool glfwInitialized = false;
@@ -42,6 +44,11 @@ namespace Phoenix {
 		}
 		window = glfwCreateWindow((int)props.width, (int)props.height, props.title.c_str(), nullptr, nullptr);
 		glfwMakeContextCurrent(window);
+
+		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+		gladLoadGL();
+		PHX_CORE_ASSERT(status, "Failed to initialize GLAD!")
+
 		glfwSetWindowUserPointer(window, &data);
 		SetVSync(true);
 

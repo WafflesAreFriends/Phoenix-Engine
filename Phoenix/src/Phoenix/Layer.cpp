@@ -4,7 +4,9 @@
 namespace Phoenix {
 
 	Layer::Layer(const std::string& name)
-	: debugName(name) {}
+		: debugName(name) {
+
+	}
 
 	Layer::~Layer() {
 

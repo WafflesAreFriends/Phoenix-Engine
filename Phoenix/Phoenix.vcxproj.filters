@@ -7,8 +7,17 @@
     <Filter Include="Phoenix\Events">
       <UniqueIdentifier>{240313B4-10D1-06BA-F964-77E0E5D1E21E}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Phoenix\imgui">
+      <UniqueIdentifier>{AA7CFB07-163D-773E-DF77-C0BB4BF7BB1A}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Platform">
       <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\GLFW">
+      <UniqueIdentifier>{A98C9061-154D-0C98-DE87-55154A075174}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\OpenGL">
+      <UniqueIdentifier>{1E7D2C1D-8A08-9AE1-9319-1DD6FF23F6E1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -46,6 +55,15 @@
     <ClInclude Include="src\Phoenix\Window.h">
       <Filter>Phoenix</Filter>
     </ClInclude>
+    <ClInclude Include="src\Phoenix\imgui\ImGuiLayer.h">
+      <Filter>Phoenix\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\GLFW\GLFWRenderer.h">
+      <Filter>Platform\GLFW</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenglRenderer.h">
+      <Filter>Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\WINWindow.h">
       <Filter>Platform</Filter>
     </ClInclude>
@@ -63,6 +81,15 @@
     </ClCompile>
     <ClCompile Include="src\Phoenix\Log.cpp">
       <Filter>Phoenix</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Phoenix\imgui\ImGuiLayer.cpp">
+      <Filter>Phoenix\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\GLFW\GLFWRenderer.cpp">
+      <Filter>Platform\GLFW</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenglRenderer.cpp">
+      <Filter>Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\WINWindow.cpp">
       <Filter>Platform</Filter>
