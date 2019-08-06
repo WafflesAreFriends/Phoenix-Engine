@@ -7,3 +7,9 @@
 [submodule "Phoenix/vendor/GLFW"]
 	path = Phoenix/vendor/GLFW
 	url = https://github.com/WafflesAreFriends/glfw.git
+[submodule "Phoenix/vendor/imgui"]
+	path = Phoenix/vendor/imgui
+	url = https://github.com/WafflesAreFriends/imgui
+[submodule "Phoenix/vendor/GLFW2"]
+	path = Phoenix/vendor/GLFW2
+	url = https://github.com/WafflesAreFriends/glfw.git
