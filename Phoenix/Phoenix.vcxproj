@@ -165,7 +165,6 @@
     <ClInclude Include="src\Phoenix\Log.h" />
     <ClInclude Include="src\Phoenix\Window.h" />
     <ClInclude Include="src\Phoenix\imgui\ImGuiLayer.h" />
-    <ClInclude Include="src\Platform\GLFW\GLFWRenderer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenglRenderer.h" />
     <ClInclude Include="src\Platform\WINWindow.h" />
     <ClInclude Include="src\pcheaders.h" />
@@ -176,7 +175,6 @@
     <ClCompile Include="src\Phoenix\LayerStack.cpp" />
     <ClCompile Include="src\Phoenix\Log.cpp" />
     <ClCompile Include="src\Phoenix\imgui\ImGuiLayer.cpp" />
-    <ClCompile Include="src\Platform\GLFW\GLFWRenderer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenglRenderer.cpp" />
     <ClCompile Include="src\Platform\WINWindow.cpp" />
     <ClCompile Include="src\pcheaders.cpp">

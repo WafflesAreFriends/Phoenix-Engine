@@ -6,11 +6,11 @@ public:
 	ExLayer() : Layer("Example") {}
 
 	void OnUpdate() override {
-		PHX_INFO("ExampleLayer::Update");
+		
 	}
 
 	void OnEvent(Phoenix::Event& event) override {
-		PHX_TRACE("{0}", event);
+		
 	}
 };
 
@@ -20,6 +20,7 @@ public:
 	
 	Sandbox() {
 		PushLayer(new ExLayer());
+		PushOverlay(new Phoenix::ImGuiLayer());
 	}
 
 	~Sandbox() {

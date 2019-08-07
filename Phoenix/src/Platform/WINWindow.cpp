@@ -72,7 +72,6 @@ namespace Phoenix {
 		// Convert keycodes for not using glfw
 		glfwSetKeyCallback(window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-		
 			switch (action) {
 				case GLFW_PRESS: {
 					KeyPressedEvent event(key, 0);
@@ -90,6 +89,12 @@ namespace Phoenix {
 					break;
 				}
 			}
+		});
+
+		glfwSetCharCallback(window, [](GLFWwindow* window, unsigned int keyCode) {
+			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+			KeyTypedEvent event(keyCode);
+			data.eventCallback(event);
 		});
 
 		glfwSetMouseButtonCallback(window, [](GLFWwindow* window, int button, int action, int mods) {

@@ -58,9 +58,6 @@
     <ClInclude Include="src\Phoenix\imgui\ImGuiLayer.h">
       <Filter>Phoenix\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\GLFW\GLFWRenderer.h">
-      <Filter>Platform\GLFW</Filter>
-    </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenglRenderer.h">
       <Filter>Platform\OpenGL</Filter>
     </ClInclude>
@@ -84,9 +81,6 @@
     </ClCompile>
     <ClCompile Include="src\Phoenix\imgui\ImGuiLayer.cpp">
       <Filter>Phoenix\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\GLFW\GLFWRenderer.cpp">
-      <Filter>Platform\GLFW</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenglRenderer.cpp">
       <Filter>Platform\OpenGL</Filter>

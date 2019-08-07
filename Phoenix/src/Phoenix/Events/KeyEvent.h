@@ -48,4 +48,21 @@ namespace Phoenix {
 
 		EVENT_CLASS_TYPE(KeyReleased)
 	};
+
+	class PHX_API KeyTypedEvent : public KeyEvent {
+	public:
+		KeyTypedEvent(int keyCode) // ? Keep track of number of times repeated
+			: KeyEvent(keyCode) {
+		}
+
+		std::string ToString() const override {
+			std::stringstream ss;
+			ss << "KeyTypedEvent: " << keyCode << " typed";
+			return ss.str();
+		}
+
+		EVENT_CLASS_TYPE(KeyTyped)
+	private:
+		int repeatCount;
+	};
 }
