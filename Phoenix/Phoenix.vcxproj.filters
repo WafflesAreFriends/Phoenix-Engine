@@ -13,9 +13,6 @@
     <Filter Include="Platform">
       <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Platform\GLFW">
-      <UniqueIdentifier>{A98C9061-154D-0C98-DE87-55154A075174}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Platform\OpenGL">
       <UniqueIdentifier>{1E7D2C1D-8A08-9AE1-9319-1DD6FF23F6E1}</UniqueIdentifier>
     </Filter>

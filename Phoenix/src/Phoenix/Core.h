@@ -10,6 +10,10 @@
 	#error Phoenix only supports Windows.
 #endif
 
+#ifdef HZ_DEBUG
+	#define PHX_ENABLE_ASSERTS
+#endif
+
 #ifdef PHX_ENABLE_ASSERTS
 	#define PHX_ASSERT(x, ...) {if (!(x)) { PHX_ERROR("Assertion failed: {0}", __VA_ARGS__); __debugbreak(); } };
 	#define PHX_CORE_ASSERT(x, ...) {if(!(x)) {PHX_CORE_ERROR("Assertion failed: {0}", __VA_ARGS__); __debugbreak(); } }
