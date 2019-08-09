@@ -20,9 +20,7 @@ namespace Phoenix {
 		void SetVSync(bool enabled) override;
 		bool IsVSync() const override;
 
-		GLFWwindow* GetInstance() const {
-			return window;
-		}
+		inline virtual void* GetNativeWindow() const { return window; }
 	private:
 		virtual void Init(const WindowProps& props);
 		virtual void Shutdown();

@@ -5,6 +5,8 @@
 
 #include <glad/glad.h>
 
+#include "Input.h"
+
 using namespace std;
 
 namespace Phoenix {
@@ -57,6 +59,10 @@ namespace Phoenix {
 			for (Layer* layer : layerStack) {
 				layer->OnUpdate();
 			}
+
+			auto[x, y] = Input::GetMousePos();
+			PHX_CORE_TRACE("{0}, {1}", x, y);
+
 			window->OnUpdate();
 		}
 	}

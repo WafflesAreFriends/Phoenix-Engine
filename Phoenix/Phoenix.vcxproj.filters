@@ -58,10 +58,12 @@
     <ClInclude Include="src\Platform\OpenGL\OpenglRenderer.h">
       <Filter>Platform\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\WINWindow.h">
+    <ClInclude Include="src\pcheaders.h" />
+    <ClInclude Include="src\Phoenix\Input.h" />
+    <ClInclude Include="src\Platform\Windows\WINWindow.h">
       <Filter>Platform</Filter>
     </ClInclude>
-    <ClInclude Include="src\pcheaders.h" />
+    <ClInclude Include="src\Platform\Windows\WINInput.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Phoenix\Application.cpp">
@@ -82,9 +84,10 @@
     <ClCompile Include="src\Platform\OpenGL\OpenglRenderer.cpp">
       <Filter>Platform\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\WINWindow.cpp">
+    <ClCompile Include="src\pcheaders.cpp" />
+    <ClCompile Include="src\Platform\Windows\WINWindow.cpp">
       <Filter>Platform</Filter>
     </ClCompile>
-    <ClCompile Include="src\pcheaders.cpp" />
+    <ClCompile Include="src\Platform\Windows\WINInput.cpp" />
   </ItemGroup>
 </Project>
