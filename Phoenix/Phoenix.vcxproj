@@ -158,9 +158,11 @@
     <ClInclude Include="src\Phoenix\Events\Event.h" />
     <ClInclude Include="src\Phoenix\Events\KeyEvent.h" />
     <ClInclude Include="src\Phoenix\Events\MouseEvent.h" />
+    <ClInclude Include="src\Phoenix\KeyCodes.h" />
     <ClInclude Include="src\Phoenix\Layer.h" />
     <ClInclude Include="src\Phoenix\LayerStack.h" />
     <ClInclude Include="src\Phoenix\Log.h" />
+    <ClInclude Include="src\Phoenix\MouseButtonCodes.h" />
     <ClInclude Include="src\Phoenix\Window.h" />
     <ClInclude Include="src\Phoenix\imgui\ImGuiLayer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenglRenderer.h" />

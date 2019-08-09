@@ -64,6 +64,8 @@
       <Filter>Platform</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\WINInput.h" />
+    <ClInclude Include="src\Phoenix\KeyCodes.h" />
+    <ClInclude Include="src\Phoenix\MouseButtonCodes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Phoenix\Application.cpp">
