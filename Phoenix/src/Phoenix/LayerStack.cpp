@@ -3,9 +3,7 @@
 
 namespace Phoenix {
 
-	LayerStack::LayerStack() {
-		stackItr = stack.begin();
-	}
+	LayerStack::LayerStack() {}
 
 	LayerStack::~LayerStack() {
 		for (Layer* layer : stack) {
@@ -14,13 +12,14 @@ namespace Phoenix {
 	}
 
 	void LayerStack::PushLayer(Layer* layer) {
-		stack.emplace(stackItr, layer);
+		stack.emplace(stack.begin() + stackInsertIndex, layer);
+		stackInsertIndex++;
 	}
 	void LayerStack::PopLayer(Layer* layer) {
 		auto it = std::find(stack.begin(), stack.end(), layer);
 		if (it != stack.end()) {
 			stack.erase(it);
-			stackItr--;
+			stackInsertIndex--;
 		}
 	}
 

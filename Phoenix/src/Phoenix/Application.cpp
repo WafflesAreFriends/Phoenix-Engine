@@ -23,6 +23,8 @@ namespace Phoenix {
 		window = std::unique_ptr<Window>(Window::Create());
 		window->SetEventCallback(BIND_FN_TO_EVENT(OnEvent));
 
+		imGuiLayer = new ImGuiLayer();
+		PushOverlay(imGuiLayer);
 	}
 
 	Application::~Application() {
@@ -60,8 +62,12 @@ namespace Phoenix {
 				layer->OnUpdate();
 			}
 
-			auto[x, y] = Input::GetMousePos();
-			PHX_CORE_TRACE("{0}, {1}", x, y);
+			// Will be executed in future render thread
+			imGuiLayer->BeginRender();
+			for (Layer* layer : layerStack) {
+				layer->OnImGuiRender();
+			}
+			imGuiLayer->EndRender();
 
 			window->OnUpdate();
 		}

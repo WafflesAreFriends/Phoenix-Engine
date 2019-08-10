@@ -22,7 +22,7 @@ namespace Phoenix {
 		std::vector<Layer*>::iterator end() { return stack.end(); }
 	private:
 		std::vector<Layer*> stack; // First half of stack is layers, second half are overlays
-		std::vector<Layer*>::iterator stackItr;
+		unsigned int stackInsertIndex = 0;
 
 	};
 

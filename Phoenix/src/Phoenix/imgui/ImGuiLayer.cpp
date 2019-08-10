@@ -2,8 +2,10 @@
 #include "ImGuiLayer.h"
 
 #include "imgui.h"
-#include "Platform/OpenGL/OpenglRenderer.h"
-#include "Platform/Windows/WINWindow.h"
+
+#define IMGUI_IMPL_API
+#include "examples/imgui_impl_glfw.h"
+#include "examples/imgui_impl_opengl3.h"
 
 #include "Phoenix/Application.h"
 
@@ -21,71 +23,71 @@ namespace Phoenix {
 	}
 
 	void ImGuiLayer::OnAttach() {
+		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
-		ImGui::StyleColorsDark();
 
 		ImGuiIO& io = ImGui::GetIO();
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+		//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
+		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+
 		io.BackendFlags = ImGuiBackendFlags_HasMouseCursors;
 		io.BackendFlags = ImGuiBackendFlags_HasSetMousePos;
 		
-		// TEMP
-		// Keyboard mapping. ImGui will use those indices to peek into the io.KeysDown[] array.
-		io.KeyMap[ImGuiKey_Tab] = GLFW_KEY_TAB;
-		io.KeyMap[ImGuiKey_LeftArrow] = GLFW_KEY_LEFT;
-		io.KeyMap[ImGuiKey_RightArrow] = GLFW_KEY_RIGHT;
-		io.KeyMap[ImGuiKey_UpArrow] = GLFW_KEY_UP;
-		io.KeyMap[ImGuiKey_DownArrow] = GLFW_KEY_DOWN;
-		io.KeyMap[ImGuiKey_PageUp] = GLFW_KEY_PAGE_UP;
-		io.KeyMap[ImGuiKey_PageDown] = GLFW_KEY_PAGE_DOWN;
-		io.KeyMap[ImGuiKey_Home] = GLFW_KEY_HOME;
-		io.KeyMap[ImGuiKey_End] = GLFW_KEY_END;
-		io.KeyMap[ImGuiKey_Insert] = GLFW_KEY_INSERT;
-		io.KeyMap[ImGuiKey_Delete] = GLFW_KEY_DELETE;
-		io.KeyMap[ImGuiKey_Backspace] = GLFW_KEY_BACKSPACE;
-		io.KeyMap[ImGuiKey_Space] = GLFW_KEY_SPACE;
-		io.KeyMap[ImGuiKey_Enter] = GLFW_KEY_ENTER;
-		io.KeyMap[ImGuiKey_Escape] = GLFW_KEY_ESCAPE;
-		io.KeyMap[ImGuiKey_A] = GLFW_KEY_A;
-		io.KeyMap[ImGuiKey_C] = GLFW_KEY_C;
-		io.KeyMap[ImGuiKey_V] = GLFW_KEY_V;
-		io.KeyMap[ImGuiKey_X] = GLFW_KEY_X;
-		io.KeyMap[ImGuiKey_Y] = GLFW_KEY_Y;
-		io.KeyMap[ImGuiKey_Z] = GLFW_KEY_Z;
+		ImGui::StyleColorsDark();
+
+		// Tweak WindowRounding/WindowBg when viewports enabled so platform windows can look identical
+		ImGuiStyle& style = ImGui::GetStyle();
+		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
+			style.WindowRounding = 0.0f;
+			style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+		}
 		
 		Application& app = Application::Get();
-
-		/*Window* temp = &app.GetWindow();
-		WINWindow* temp2 = (WINWindow*)temp;
-		ImGui_ImplGlfw_InitForOpenGL(temp2->GetInstance(), true); */
+		GLFWwindow* window = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
+		
+		// Setup platform rendering
+		ImGui_ImplGlfw_InitForOpenGL(window, true);
 		ImGui_ImplOpenGL3_Init("#version 410");
 	}
 
 	void ImGuiLayer::OnDetach() {
-
+		ImGui_ImplOpenGL3_Shutdown();
+		ImGui_ImplGlfw_Shutdown();
+		ImGui::DestroyContext();
 	}
 
-	void ImGuiLayer::OnUpdate() {
-
-		ImGuiIO& io = ImGui::GetIO(); (void)io;
-		Application& app = Application::Get();
-		io.DisplaySize = ImVec2(app.GetWindow().GetWidth(), app.GetWindow().GetHeight());
-
-		float time2 = (float)glfwGetTime();
-		io.DeltaTime = time > 0.0 ? (time2 - time) : (1.0f / 60.0f);
-		time = time2;
-
-		ImGui_ImplOpenGL3_NewFrame();
-	//	ImGui_ImplGlfw_NewFrame();
-		ImGui::NewFrame();
-
+	void ImGuiLayer::OnImGuiRender() {
 		static bool show = true;
 		ImGui::ShowDemoWindow(&show);
+	}
 
+	void ImGuiLayer::BeginRender() {
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+	}
 
+	void ImGuiLayer::EndRender() {
+		ImGuiIO& io = ImGui::GetIO();
+		Application& app = Application::Get();
+		Window* window = &app.GetWindow();
+		io.DisplaySize = ImVec2(window->GetWidth(), window->GetHeight());
+		
+		// Render ImGui data
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
+		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
+			GLFWwindow* currentContext = glfwGetCurrentContext();
+			ImGui::UpdatePlatformWindows();
+			ImGui::RenderPlatformWindowsDefault();
+			glfwMakeContextCurrent(currentContext);
+		}
 	}
+	
+	/*
 
 	void ImGuiLayer::OnEvent(Event & event) {
 		EventDispatcher dispatcher(event);
@@ -163,5 +165,5 @@ namespace Phoenix {
 
 		return false;
 	}
-
+	*/
 }

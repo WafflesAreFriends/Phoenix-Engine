@@ -110,6 +110,7 @@ project "Sandbox"
 	{
 		"Phoenix/vendor/spdlog/include",
 		"Phoenix/src",
+		"Phoenix/vendor",
 		"%{IncludeDir.glm}"
 	}
 	

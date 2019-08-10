@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Phoenix/Layer.h"
+
 #include "Phoenix/Events/ApplicationEvent.h"
 #include "Phoenix/Events/KeyEvent.h"
 #include "Phoenix/Events/MouseEvent.h"
@@ -13,6 +14,13 @@ namespace Phoenix {
 		ImGuiLayer();
 		~ImGuiLayer();
 
+		virtual void OnAttach() override;
+		virtual void OnDetach() override;
+		virtual void OnImGuiRender() override;
+
+		void BeginRender();
+		void EndRender();
+		/*
 		void OnAttach();
 		void OnDetach();
 		void OnUpdate();
@@ -27,6 +35,7 @@ namespace Phoenix {
 		bool OnKeyReleasedEvent(KeyReleasedEvent& e);
 		bool OnKeyTypedEvent(KeyTypedEvent& e);
 		bool OnWindowResizeEvent(WindowResizeEvent& e);
+		*/
 	private:
 		float time = 0.0f;
 	};
