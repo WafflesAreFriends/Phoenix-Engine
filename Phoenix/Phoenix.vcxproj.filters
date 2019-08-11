@@ -87,9 +87,6 @@
     <ClInclude Include="src\Phoenix\Window.h">
       <Filter>src\Phoenix</Filter>
     </ClInclude>
-    <ClInclude Include="src\Phoenix\imgui\ImGuiLayer.h">
-      <Filter>src\Phoenix\imgui</Filter>
-    </ClInclude>
     <ClInclude Include="src\Platform\Windows\WINInput.h">
       <Filter>src\Platform\Windows</Filter>
     </ClInclude>
@@ -1203,6 +1200,7 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp">
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
+    <ClInclude Include="src\Phoenix\ImGui\ImGuiLayer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Phoenix\Application.cpp">
@@ -1217,12 +1215,6 @@
     <ClCompile Include="src\Phoenix\Log.cpp">
       <Filter>src\Phoenix</Filter>
     </ClCompile>
-    <ClCompile Include="src\Phoenix\imgui\ImGuiBuild.cpp">
-      <Filter>src\Phoenix\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Phoenix\imgui\ImGuiLayer.cpp">
-      <Filter>src\Phoenix\imgui</Filter>
-    </ClCompile>
     <ClCompile Include="src\Platform\Windows\WINInput.cpp">
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>
@@ -1232,5 +1224,7 @@
     <ClCompile Include="src\pcheaders.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Phoenix\ImGui\ImGuiBuild.cpp" />
+    <ClCompile Include="src\Phoenix\ImGui\ImGuiLayer.cpp" />
   </ItemGroup>
 </Project>

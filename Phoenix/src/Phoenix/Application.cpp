@@ -1,23 +1,19 @@
 #include "pcheaders.h"
+
 #include "Application.h"
 
-#include "Phoenix/Log.h"
-
 #include <glad/glad.h>
-
-#include "Input.h"
-
-using namespace std;
 
 namespace Phoenix {
 
 #define BIND_FN_TO_EVENT(x) std::bind(&Application::x, this, std::placeholders::_1)
 
-
+	// 'instance' is static so it will initially be set to nullptr
 	Application* Application::instance = nullptr;
 
+	//	Creates an instance of application, a Window object for rendering, and an ImGuiLayer that is pushed onto the LayerStack.
 	Application::Application() {
-		PHX_CORE_ASSERT(instance, "Application exists!");
+		PHX_CORE_ASSERT(instance, "Application exists");
 		instance = this;
 
 		window = std::unique_ptr<Window>(Window::Create());
@@ -28,32 +24,16 @@ namespace Phoenix {
 	}
 
 	Application::~Application() {
-
+		delete instance;
 	}
 
-	void Application::PushLayer(Layer* layer) {
-		layerStack.PushLayer(layer);
-		layer->OnAttach();
-	}
-
-	void Application::PushOverlay(Layer* overlay) {
-		layerStack.PushOverlay(overlay);
-		overlay->OnAttach();
-	}
-
-	void Application::OnEvent(Event& event) {
-		EventDispatcher eventDispatcher(event);
-		eventDispatcher.Dispatch<WindowCloseEvent>(BIND_FN_TO_EVENT(OnWindowClose));
-
-	//	PHX_CORE_TRACE("{0}", event);
-
-		for (auto i = layerStack.end(); i != layerStack.begin();) {
-			(*--i)->OnEvent(event);
-			if (event.IsHandled())
-				break;
-		}
-	}
-
+	/*
+		- Updates all layers
+		- Updates all ImGuiLayers and renders ImGui to them.
+			NOTE:Because ImGui is an immediate mode API, must be called each time
+			within the render loop. If changed to retained mode API, take out of loop.
+		- Updates window
+	*/
 	void Application::Run() {
 		while (running) {
 			glClearColor(0, 0.5, 1, 0);
@@ -62,7 +42,7 @@ namespace Phoenix {
 				layer->OnUpdate();
 			}
 
-			// Will be executed in future render thread
+			// Will be executed in future render thread for multi threading
 			imGuiLayer->BeginRender();
 			for (Layer* layer : layerStack) {
 				layer->OnImGuiRender();
@@ -73,6 +53,27 @@ namespace Phoenix {
 		}
 	}
 
+	// Dispatches a WindowCloseEvent with OnWindowClose and tells the layers in the LayerStack that the window has been closed.
+	void Application::OnEvent(Event& event) {
+		EventDispatcher eventDispatcher(event);
+		eventDispatcher.Dispatch<WindowCloseEvent>(BIND_FN_TO_EVENT(OnWindowClose));
+
+		for (auto i = layerStack.end(); i != layerStack.begin();) {
+			(*--i)->OnEvent(event);
+			if (event.IsHandled())
+				break;
+		}
+	}
+
+	void Application::PushLayer(Layer* layer) {
+		layerStack.PushLayer(layer);
+	}
+
+	void Application::PushOverlay(Layer* overlay) {
+		layerStack.PushOverlay(overlay);
+	}
+
+	// Tells the application to stop running and returns true for Event handler
 	bool Application::OnWindowClose(WindowCloseEvent& event) {
 		running = false;
 		return true;

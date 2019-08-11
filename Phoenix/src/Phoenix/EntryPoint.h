@@ -1,6 +1,6 @@
 #pragma once
 
-#ifdef PHX_PLATFORM_WINDOWS
+#ifdef PHX_PLATFORM_WINDOWS // Defines platform will be used on
 
 extern Phoenix::Application* Phoenix::CreateApplication();
 

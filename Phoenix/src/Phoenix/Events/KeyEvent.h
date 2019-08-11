@@ -4,15 +4,15 @@
 
 namespace Phoenix {
 
+	// Extensible class
 	class PHX_API KeyEvent : public Event {
-
 	public:
 		inline int GetKeyCode() const { return keyCode; }
 
 		EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput)
 	protected:
 		KeyEvent(int keyCode) : keyCode(keyCode) {}
-
+	protected:
 		int keyCode;
 	};
 

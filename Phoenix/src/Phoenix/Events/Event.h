@@ -4,8 +4,7 @@
 
 namespace Phoenix {
 
-	// Currently blocking events. Better strategy to buffer events in an event bus
-	//and process them during the event part of the update stage.
+	// Currently blocking events. Better strategy to buffer events in an event bus and process them during the event part of the update stage.
 
 	enum class EventType {
 		None = 0,
@@ -48,23 +47,24 @@ namespace Phoenix {
 	class EventDispatcher {
 		template<typename T>
 		using EventFn = std::function<bool(T&)>;
+
 	public:
 		EventDispatcher(Event& event) : event(event) {}
 
+		// Makes sure T is an event and handles it
 		template<typename T>
-		bool Dispatch(EventFn<T> func) // Type safety?
-		{
+		bool Dispatch(EventFn<T> func) {
 			if (event.GetEventType() == T::GetStaticType()) {
 				event.handled = func(*(T*)&event);
 				return true;
 			}
 			return false;
 		}
-
 	private:
 		Event& event;
 	};
 
+	// Event print
 	inline std::ostream& operator<<(std::ostream& os, const Event& e) {
 		return os << e.ToString();
 	}

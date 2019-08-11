@@ -1,11 +1,15 @@
 #pragma once
 
 #ifdef PHX_PLATFORM_WINDOWS
+#if PHX_DYNAMIC_LINK // If ever change to use dynamic linking
 	#ifdef PHX_BUILD_DLL
 		#define PHX_API __declspec(dllexport)
 	#else
 		#define PHX_API __declspec(dllimport)
 	#endif
+#else
+	#define PHX_API
+#endif
 #else
 	#error Phoenix only supports Windows.
 #endif
@@ -23,5 +27,3 @@
 #endif
 
 #define BIT(x) (1 << x)
-
-//#define PHX_BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)

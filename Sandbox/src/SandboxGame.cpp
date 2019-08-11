@@ -5,22 +5,23 @@
 
 class ExLayer : public Phoenix::Layer {
 public:
-	ExLayer() : Layer("Example") {
+	ExLayer() : Layer("Example") {}
 
-	}
-
+	//-- Update per frame --//
 	void OnUpdate() override {
 		if (Phoenix::Input::IsKeyPressed(PHX_KEY_1))
 			PHX_INFO("1 Key pressed!");
 	}
 
-	virtual void OnImGuiRender() override {
+	//-- Implement ImGui here --//
+	void OnImGuiRender() override {
 		bool show = true;
 		ImGui::Begin("Test");
 		ImGui::Checkbox("Hey", &show);
 		ImGui::End();
 	}
 
+	//-- Implement event action for this layer --//
 	void OnEvent(Phoenix::Event& event) override {
 		if (event.GetEventType() == Phoenix::EventType::KeyPressed) {
 			Phoenix::KeyPressedEvent& e = (Phoenix::KeyPressedEvent&) event;
@@ -32,17 +33,11 @@ public:
 };
 
 class Sandbox : public Phoenix::Application {
-
 public:
-	
+	// Pushing layers and overlays into Sandbox
 	Sandbox() {
 		PushLayer(new ExLayer());
 	}
-
-	~Sandbox() {
-
-	}
-
 };
 
 Phoenix::Application* Phoenix::CreateApplication() {

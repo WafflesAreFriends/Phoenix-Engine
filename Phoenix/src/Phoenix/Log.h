@@ -7,20 +7,18 @@
 namespace Phoenix {
 
 	class PHX_API Log {
-
 	public:
 		static void Init();
 
 		inline static std::shared_ptr<spdlog::logger>& GetCoreLogger() { return s_CoreLogger; }
 		inline static std::shared_ptr<spdlog::logger>& GetClientLogger() { return s_ClientLogger; }
-
 	private:
 		static std::shared_ptr<spdlog::logger> s_CoreLogger;
 		static std::shared_ptr<spdlog::logger> s_ClientLogger;
 	};
 
 }
-// Wrap errors in macro enabling on certain circumstances
+// Wrap errors in macros enabling on certain circumstances
 #define PHX_CORE_INFO(...) ::Phoenix::Log::GetCoreLogger()->info(__VA_ARGS__)
 #define PHX_CORE_TRACE(...) ::Phoenix::Log::GetCoreLogger()->trace(__VA_ARGS__)
 #define PHX_CORE_WARN(...) ::Phoenix::Log::GetCoreLogger()->warn(__VA_ARGS__)

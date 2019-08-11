@@ -43,12 +43,14 @@ namespace Phoenix {
 		float xOffset, yOffset;
 	};
 
+	// Extensible class
 	class PHX_API MouseButtonEvent : public Event {
 	public:
 		inline int GetMouseButton() const { return button; }
 		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
 	protected:
 		MouseButtonEvent(int button) : button(button) {}
+	protected:
 		int button;
 	};
 
@@ -61,6 +63,7 @@ namespace Phoenix {
 			ss << "MouseButtonPressedEvent: " << button;
 			return ss.str();
 		}
+
 		EVENT_CLASS_TYPE(MouseButtonPressed)
 	};
 

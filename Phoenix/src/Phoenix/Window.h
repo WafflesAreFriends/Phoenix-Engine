@@ -2,8 +2,8 @@
 
 #include "pcheaders.h"
 
-#include "Phoenix/Core.h"
-#include "Phoenix/Events/Event.h"
+#include "Core.h"
+#include "Events/Event.h"
 
 namespace Phoenix {
 

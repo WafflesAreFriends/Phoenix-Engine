@@ -6,7 +6,7 @@
 #include "Events/Event.h"
 #include "Events/ApplicationEvent.h"
 #include "LayerStack.h"
-#include "Phoenix/ImGui/ImGuiLayer.h"
+#include "ImGui/ImGuiLayer.h"
 
 namespace Phoenix {
 
@@ -21,20 +21,21 @@ namespace Phoenix {
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* layer);
 
-		inline static Application& Get() { return *instance; }
+		inline static Application& GetInstance() { return *instance; }
 		inline Window& GetWindow() { return *window; }
 	private:
 		bool OnWindowClose(WindowCloseEvent& event);
+	private:
+		static Application* instance;
 
 		std::unique_ptr<Window> window;
 		ImGuiLayer* imGuiLayer;
-		bool running = true;
 		LayerStack layerStack;
 
-		static Application* instance;
+		bool running = true;
 	};
 
-	// Defined in client
+	// Client-defined function that takes an Application created by the client and runs it through the engine.
 	Application* CreateApplication();
 
 }

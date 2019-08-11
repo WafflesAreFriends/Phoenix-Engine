@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Phoenix/Core.h"
+#include "Core.h"
 #include "Layer.h"
 
-#include <vector>
+#include <vector> // vector<>, vector<>::iterator
 
 namespace Phoenix {
 

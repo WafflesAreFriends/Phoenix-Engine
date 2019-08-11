@@ -17,15 +17,19 @@ IncludeDir["GLAD"] = "Phoenix/vendor/GLAD/include"
 IncludeDir["imgui"] = "Phoenix/vendor/imgui"
 IncludeDir["glm"] = "Phoenix/vendor/glm"
 
-include "Phoenix/vendor/GLFW"
-include "Phoenix/vendor/GLAD"
-include "Phoenix/vendor/imgui"
+group "deps"
+	include "Phoenix/vendor/GLFW"
+	include "Phoenix/vendor/GLAD"
+	include "Phoenix/vendor/imgui"
+
+group ""
 
 project "Phoenix"
 	location "Phoenix"
-	kind "SharedLib"
+	kind "StaticLib"
 	language "C++"
-	staticruntime "off"
+	cppdialect "C++17"
+	staticruntime "on"
 	
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/"..outputdir.."/%{prj.name}")
@@ -39,6 +43,11 @@ project "Phoenix"
 		"%{prj.name}/src/**.cpp",
 		"%{prj.name}/vendor/glm/glm/**.hpp",
 		"%{prj.name}/vendor/glm/glm/**.inl"
+	}
+	
+	defines
+	{
+		"_CRT_SECURE_NO_WARNINGS"
 	}
 	
 	includedirs
@@ -60,7 +69,6 @@ project "Phoenix"
 	}
 	
 	filter "system:windows"
-		cppdialect "C++17"
 		staticruntime "On"
 		systemversion "latest"
 		
@@ -71,31 +79,27 @@ project "Phoenix"
 			"GLFW_INCLUDE_NONE"
 		}
 		
-		postbuildcommands
-		{
-			("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\"")
-		}
-		
 	filter "configurations:Debug"
 		defines "PHX_DEBUG"
 		runtime "Debug"
-		symbols "On"
+		symbols "on"
 	
 	filter "configurations:Release"
 		defines "PHX_RELEASE"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
 	
 	filter "configurations:Dist"
 		defines "PHX_DIST"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
 		
 project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
-	staticruntime "off"
+	cppdialect "C++17"
+	staticruntime "on"
 	
 	targetdir ("bin/"..outputdir.."/%{prj.name}")
 	objdir ("bin-int/"..outputdir.."/%{prj.name}")
@@ -120,7 +124,6 @@ project "Sandbox"
 	}
 	
 	filter "system:windows"
-		cppdialect "C++17"
 		systemversion "latest"
 		
 		defines
@@ -131,14 +134,14 @@ project "Sandbox"
 	filter "configurations:Debug"
 		defines "PHX_DEBUG"
 		runtime "Debug"
-		symbols "On"
+		symbols "on"
 	
 	filter "configurations:Release"
 		defines "PHX_RELEASE"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
 	
 	filter "configurations:Dist"
 		defines "PHX_DIST"
 		runtime "Release"
-		optimize "On"
+		optimize "on"

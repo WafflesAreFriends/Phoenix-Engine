@@ -1,1 +1,1 @@
-#include "pcheaders.h" //visual studio requires source file for precompiled headers
+#include "pcheaders.h" // source file for pre-compiled headers

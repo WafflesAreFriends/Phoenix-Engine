@@ -1,14 +1,14 @@
 #pragma once
 
-#include "Phoenix/Core.h"
-#include "Phoenix/Events/Event.h"
+#include "Core.h"
+#include "Events/Event.h"
 
 namespace Phoenix {
 
 	class PHX_API Layer {
 	public:
 		Layer(const std::string& name = "Layer");
-		virtual ~Layer();
+		virtual ~Layer() {};
 
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
@@ -16,11 +16,11 @@ namespace Phoenix {
 		virtual void OnImGuiRender() {};
 		virtual void OnEvent(Event& event) {}
 
-		// Debug
+		// For debugging
 		inline const std::string& GetName() const { return debugName; }
 	protected:
-		bool enabled = true;
 		std::string debugName;
+		bool enabled = true;
 	};
 
 }
