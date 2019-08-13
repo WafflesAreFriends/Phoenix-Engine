@@ -32,6 +32,8 @@ namespace Phoenix {
 		ImGuiLayer* imGuiLayer;
 		LayerStack layerStack;
 
+		unsigned int vertexArray, vertexBuffer, indexBuffer;
+
 		bool running = true;
 	};
 

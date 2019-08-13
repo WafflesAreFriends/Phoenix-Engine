@@ -10,11 +10,17 @@
     <Filter Include="src\Phoenix\Events">
       <UniqueIdentifier>{5B23F711-4707-B867-B067-B2BA9C6AA2E9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Phoenix\imgui">
-      <UniqueIdentifier>{01F2307F-6D08-2F15-B67F-BA3622D5FF9C}</UniqueIdentifier>
+    <Filter Include="src\Phoenix\ImGui">
+      <UniqueIdentifier>{C159ED7C-2D70-EB12-76E7-7634E23CBC9A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Phoenix\Renderer">
+      <UniqueIdentifier>{DD744863-C903-D22C-7222-E6275E90E2D2}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Platform">
       <UniqueIdentifier>{21CA02E5-0D2D-9289-B6B2-CA3FA2F45D0C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform\OpenGL">
+      <UniqueIdentifier>{35A49437-A105-7245-2A73-B8F796D3A804}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Platform\Windows">
       <UniqueIdentifier>{5B054582-4794-CE4B-F0B2-E246DC20DFF1}</UniqueIdentifier>
@@ -66,6 +72,9 @@
     <ClInclude Include="src\Phoenix\Events\MouseEvent.h">
       <Filter>src\Phoenix\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\Phoenix\ImGui\ImGuiLayer.h">
+      <Filter>src\Phoenix\ImGui</Filter>
+    </ClInclude>
     <ClInclude Include="src\Phoenix\Input.h">
       <Filter>src\Phoenix</Filter>
     </ClInclude>
@@ -84,8 +93,14 @@
     <ClInclude Include="src\Phoenix\MouseButtonCodes.h">
       <Filter>src\Phoenix</Filter>
     </ClInclude>
+    <ClInclude Include="src\Phoenix\Renderer\GraphicsContext.h">
+      <Filter>src\Phoenix\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Phoenix\Window.h">
       <Filter>src\Phoenix</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h">
+      <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\WINInput.h">
       <Filter>src\Platform\Windows</Filter>
@@ -1200,11 +1215,16 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp">
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Phoenix\ImGui\ImGuiLayer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Phoenix\Application.cpp">
       <Filter>src\Phoenix</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Phoenix\ImGui\ImGuiBuild.cpp">
+      <Filter>src\Phoenix\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Phoenix\ImGui\ImGuiLayer.cpp">
+      <Filter>src\Phoenix\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\Phoenix\Layer.cpp">
       <Filter>src\Phoenix</Filter>
@@ -1215,6 +1235,9 @@
     <ClCompile Include="src\Phoenix\Log.cpp">
       <Filter>src\Phoenix</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\Windows\WINInput.cpp">
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>
@@ -1224,7 +1247,5 @@
     <ClCompile Include="src\pcheaders.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Phoenix\ImGui\ImGuiBuild.cpp" />
-    <ClCompile Include="src\Phoenix\ImGui\ImGuiLayer.cpp" />
   </ItemGroup>
 </Project>

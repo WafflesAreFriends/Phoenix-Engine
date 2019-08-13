@@ -6,7 +6,7 @@
 #include "Phoenix/Events/KeyEvent.h"
 #include "Phoenix/Events/MouseEvent.h"
 
-#include <glad/glad.h>
+#include "Platform/OpenGL/OpenGLContext.h"
 
 namespace Phoenix {
 
@@ -34,6 +34,7 @@ namespace Phoenix {
 		data.width = props.width;
 		data.height = props.height;
 
+
 		PHX_CORE_INFO("Creating window {0} ({1}, {2})", props.title, props.width, props.height);
 
 		if (!glfwInitialized) {
@@ -43,11 +44,8 @@ namespace Phoenix {
 			glfwInitialized = true;
 		}
 		window = glfwCreateWindow((int)props.width, (int)props.height, props.title.c_str(), nullptr, nullptr);
-		glfwMakeContextCurrent(window);
-
-		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		gladLoadGL();
-		PHX_CORE_ASSERT(status, "Failed to initialize GLAD!")
+		context = new OpenGLContext(window);
+		context->Init();
 
 		glfwSetWindowUserPointer(window, &data);
 		SetVSync(true);
@@ -134,7 +132,7 @@ namespace Phoenix {
 
 	void WINWindow::OnUpdate() {
 		glfwPollEvents();
-		glfwSwapBuffers(window);
+		context->SwapBuffers();
 	}
 
 	void WINWindow::SetVSync(bool enabled) {

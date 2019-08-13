@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Phoenix/Window.h"
+#include "Phoenix/Renderer/GraphicsContext.h"
 
 #include <GLFW/glfw3.h>
 
@@ -26,6 +27,7 @@ namespace Phoenix {
 		virtual void Shutdown();
 	private:
 		GLFWwindow* window;
+		GraphicsContext* context;
 
 		struct WindowData {
 			std::string title;
