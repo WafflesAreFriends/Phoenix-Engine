@@ -1215,6 +1215,7 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp">
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
+    <ClInclude Include="src\Phoenix\Renderer\OpenGLShader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Phoenix\Application.cpp">
@@ -1247,5 +1248,6 @@
     <ClCompile Include="src\pcheaders.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Phoenix\Renderer\OpenGLShader.cpp" />
   </ItemGroup>
 </Project>

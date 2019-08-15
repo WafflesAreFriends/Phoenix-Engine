@@ -156,6 +156,7 @@
     <ClInclude Include="src\Phoenix\Log.h" />
     <ClInclude Include="src\Phoenix\MouseButtonCodes.h" />
     <ClInclude Include="src\Phoenix\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\Phoenix\Renderer\OpenGLShader.h" />
     <ClInclude Include="src\Phoenix\Window.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\Windows\WINInput.h" />
@@ -537,6 +538,7 @@
     <ClCompile Include="src\Phoenix\Layer.cpp" />
     <ClCompile Include="src\Phoenix\LayerStack.cpp" />
     <ClCompile Include="src\Phoenix\Log.cpp" />
+    <ClCompile Include="src\Phoenix\Renderer\OpenGLShader.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\Windows\WINInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WINWindow.cpp" />

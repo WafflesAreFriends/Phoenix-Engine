@@ -8,6 +8,8 @@
 #include "LayerStack.h"
 #include "ImGui/ImGuiLayer.h"
 
+#include "Phoenix/Renderer//OpenGLShader.h"
+
 namespace Phoenix {
 
 	class PHX_API Application {
@@ -33,6 +35,7 @@ namespace Phoenix {
 		LayerStack layerStack;
 
 		unsigned int vertexArray, vertexBuffer, indexBuffer;
+		std::unique_ptr<OpenGLShader> shader;
 
 		bool running = true;
 	};
