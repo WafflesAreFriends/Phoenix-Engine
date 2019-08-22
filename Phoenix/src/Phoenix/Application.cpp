@@ -46,11 +46,16 @@ namespace Phoenix {
 
 		glGenVertexArrays(1, &vertexArray);
 		glBindVertexArray(vertexArray);
-	
+
+		// Anti Aliasing
+		glEnable(GL_POLYGON_SMOOTH);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA_SATURATE, GL_ONE);
+		
 		float vertices[3 * 7] = {
-			-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
-			0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
-			0.0f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
+			-0.1f, -0.5f, 0.0f,	 0.5f, 0.0f, 1.0f, 1.0f,
+			0.5f, -0.5f, 0.0f,	 0.0f, 1.0f, 1.0f, 1.0f,
+			0.0f, 0.5f, 0.0f,	 1.0f, 0.0f, 1.0f, 1.0f,
 		};
 
 		vertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
