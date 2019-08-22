@@ -1,5 +1,9 @@
 #include "pcheaders.h"
 
+#include <unordered_map>
+
+#include <string>
+
 #include "Application.h"
 
 #include <glad/glad.h>
@@ -10,6 +14,24 @@ namespace Phoenix {
 
 	// 'instance' is static so it will initially be set to nullptr
 	Application* Application::instance = nullptr;
+
+	static GLenum SDTToOpenGLType(ShaderDataType type) {
+		switch (type) {
+		case Phoenix::ShaderDataType::Float:  return GL_FLOAT;
+		case Phoenix::ShaderDataType::Float2: return GL_FLOAT;
+		case Phoenix::ShaderDataType::Float3: return GL_FLOAT;
+		case Phoenix::ShaderDataType::Float4: return GL_FLOAT;
+		case Phoenix::ShaderDataType::Mat3:   return GL_FLOAT;
+		case Phoenix::ShaderDataType::Mat4:   return GL_FLOAT;
+		case Phoenix::ShaderDataType::Int:    return GL_INT;
+		case Phoenix::ShaderDataType::Int2:   return GL_INT;
+		case Phoenix::ShaderDataType::Int3:   return GL_INT;
+		case Phoenix::ShaderDataType::Int4:   return GL_INT;
+		case Phoenix::ShaderDataType::Bool:   return GL_BOOL;
+		}
+		PHX_CORE_ASSERT(false, "Unknown ShaderDataType.");
+		return 0;
+	}
 
 	//	Creates an instance of application, a Window object for rendering, and an ImGuiLayer that is pushed onto the LayerStack.
 	Application::Application() {
@@ -24,37 +46,52 @@ namespace Phoenix {
 
 		glGenVertexArrays(1, &vertexArray);
 		glBindVertexArray(vertexArray);
-
-		glGenBuffers(1, &vertexBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	
-		float vertices[3 * 3] = {
-			-0.5f, -0.5f, 0.0f,
-			0.5f, -0.5f, 0.0f,
-			0.0f, 0.5f, 0.0f
+		float vertices[3 * 7] = {
+			-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
+			0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
+			0.0f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
 		};
 
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-		
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
+		vertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
 
-		glGenBuffers(1, &indexBuffer);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+		{
+			BufferLayout layout = {
+				{ ShaderDataType::Float3, "position" },
+				{ ShaderDataType::Float4, "color" }
+			};
 
-		unsigned int indices[3]{ 0, 1, 2 };
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+			vertexBuffer->SetLayout(layout);
+		}
+
+		uint32_t index = 0;
+		for (const BufferElement& element : vertexBuffer->GetLayout()) {
+			glEnableVertexAttribArray(index);
+			glVertexAttribPointer(index,
+				element.GetComponentCount(),
+				SDTToOpenGLType(element.type),
+				element.normalized ? GL_TRUE : GL_FALSE,
+				vertexBuffer->GetLayout().GetStride(),
+				(const void*)element.offset); 
+			index++; 
+		} 
+		unsigned int indices[3] = { 0, 1, 2 };
+
+		indexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
 
 		std::string vertexSrc = R"(
 			#version 330 core
 			
 			layout(location = 0) in vec3 position;
+			layout(location = 1) in vec4 color;
 
 			out vec3 vPosition;
+			out vec4 vColor;
 			
 			void main() {
 				vPosition = position;
-				gl_Position = vec4(position + 0.5, 1.0);
+				vColor = color;
+				gl_Position = vec4(position, 1.0);
 			}
 		)";
 
@@ -64,13 +101,15 @@ namespace Phoenix {
 			layout(location = 0) out vec4 color;
 
 			in vec3 vPosition;
+			in vec4 vColor;
 
 			void main() {
 				color = vec4(vPosition * 0.5 + 0.5, 1.0);
+				color = vColor;
 			}
 		)";
 		
-		shader.reset(new OpenGLShader(vertexSrc, fragmentSrc));
+		shader.reset(new Shader(vertexSrc, fragmentSrc));
 	}
 
 	Application::~Application() {
@@ -91,7 +130,7 @@ namespace Phoenix {
 
 			shader->Bind();
 			glBindVertexArray(vertexArray);
-			glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+			glDrawElements(GL_TRIANGLES, indexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
 			for (Layer* layer : layerStack) {
 				layer->OnUpdate();
 			}

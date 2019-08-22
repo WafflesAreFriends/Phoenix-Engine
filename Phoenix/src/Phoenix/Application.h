@@ -7,8 +7,9 @@
 #include "Events/ApplicationEvent.h"
 #include "LayerStack.h"
 #include "ImGui/ImGuiLayer.h"
+#include "Renderer/Buffer.h"
 
-#include "Phoenix/Renderer//OpenGLShader.h"
+#include "Renderer/Shader.h"
 
 namespace Phoenix {
 
@@ -34,8 +35,10 @@ namespace Phoenix {
 		ImGuiLayer* imGuiLayer;
 		LayerStack layerStack;
 
-		unsigned int vertexArray, vertexBuffer, indexBuffer;
-		std::unique_ptr<OpenGLShader> shader;
+		unsigned int vertexArray;
+		std::unique_ptr<Shader> shader;
+		std::unique_ptr<VertexBuffer> vertexBuffer;
+		std::unique_ptr<IndexBuffer> indexBuffer;
 
 		bool running = true;
 	};

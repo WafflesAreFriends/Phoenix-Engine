@@ -9,15 +9,14 @@ public:
 
 	//-- Update per frame --//
 	void OnUpdate() override {
-		if (Phoenix::Input::IsKeyPressed(PHX_KEY_1))
-			PHX_INFO("1 Key pressed!");
+		
 	}
 
 	//-- Implement ImGui here --//
 	void OnImGuiRender() override {
 		bool show = true;
-		ImGui::Begin("Test");
-		ImGui::Checkbox("Hey", &show);
+		ImGui::Begin("Output");
+		ImGui::Text("Phoenix Engine Output");
 		ImGui::End();
 	}
 

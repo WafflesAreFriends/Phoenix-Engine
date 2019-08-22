@@ -1,11 +1,11 @@
 #include "pcheaders.h"
-#include "OpenGLShader.h"
+#include "Shader.h"
 
 #include <glad/glad.h>
 
 namespace Phoenix {
 
-	OpenGLShader::OpenGLShader(const std::string & vertexSrc, const std::string & fragmentSrc) {
+	Shader::Shader(const std::string & vertexSrc, const std::string & fragmentSrc) {
 		// Read our shaders into the appropriate buffers
 
 										 // Create an empty vertex shader handle
@@ -115,15 +115,15 @@ namespace Phoenix {
 		glDetachShader(rendererID, fragmentShader);
 	}
 
-	OpenGLShader::~OpenGLShader() {
+	Shader::~Shader() {
 		glDeleteProgram(rendererID);
 	}
 
-	void OpenGLShader::Bind() const {
+	void Shader::Bind() const {
 		glUseProgram(rendererID);
 	}
 
-	void OpenGLShader::Unbind() const {
+	void Shader::Unbind() const {
 		glUseProgram(0);
 	}
 

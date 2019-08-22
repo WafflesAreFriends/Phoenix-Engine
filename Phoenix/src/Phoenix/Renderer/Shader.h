@@ -4,10 +4,10 @@
 
 namespace Phoenix {
 
-	class OpenGLShader {
+	class Shader {
 	public:
-		OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc);
-		~OpenGLShader();
+		Shader(const std::string& vertexSrc, const std::string& fragmentSrc);
+		~Shader();
 
 		void Bind() const;
 		void Unbind() const;

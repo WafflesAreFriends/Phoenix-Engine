@@ -1215,7 +1215,10 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp">
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Phoenix\Renderer\OpenGLShader.h" />
+    <ClInclude Include="src\Phoenix\Renderer\Buffer.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
+    <ClInclude Include="src\Phoenix\Renderer\Renderer.h" />
+    <ClInclude Include="src\Phoenix\Renderer\Shader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Phoenix\Application.cpp">
@@ -1248,6 +1251,9 @@
     <ClCompile Include="src\pcheaders.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Phoenix\Renderer\OpenGLShader.cpp" />
+    <ClCompile Include="src\Phoenix\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
+    <ClCompile Include="src\Phoenix\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Phoenix\Renderer\Shader.cpp" />
   </ItemGroup>
 </Project>
