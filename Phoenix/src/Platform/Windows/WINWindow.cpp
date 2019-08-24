@@ -20,7 +20,7 @@ namespace Phoenix {
 		return new WINWindow(props);
 	}
 
-	WINWindow::WINWindow(const WindowProps& props) { // Store in unique pointer
+	WINWindow::WINWindow(const WindowProps& props) { // Store in shared pointer
 		Init(props);
 	}
 
