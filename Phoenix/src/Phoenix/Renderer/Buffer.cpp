@@ -11,11 +11,11 @@
 namespace Phoenix {
 	
 	VertexBuffer* VertexBuffer::Create(float* vertices, uint32_t size) {
-		switch (Renderer::GetAPI()) {
-		case RendererAPI::None:
+		switch (Renderer::GetGraphicsAPI()) {
+		case RendererAPI::GraphicsAPI::None:
 			PHX_CORE_ASSERT(false, "return nullptr");
 			return nullptr;
-		case RendererAPI::OpenGL:
+		case RendererAPI::GraphicsAPI::OpenGL:
 			return new OpenGLVertexBuffer(vertices, size);
 		}
 		PHX_CORE_ASSERT(false, "Unknown RendererAPI");
@@ -23,11 +23,11 @@ namespace Phoenix {
 	}
 
 	IndexBuffer* IndexBuffer::Create(uint32_t* indices, uint32_t count) {
-		switch (Renderer::GetAPI()) {
-		case RendererAPI::None:
+		switch (Renderer::GetGraphicsAPI()) {
+		case RendererAPI::GraphicsAPI::None:
 			PHX_CORE_ASSERT(false, "return nullptr");
 			return nullptr;
-		case RendererAPI::OpenGL:
+		case RendererAPI::GraphicsAPI::OpenGL:
 			return new OpenGLIndexBuffer(indices, sizeof(indices)*count);
 		}
 		PHX_CORE_ASSERT(false, "Unknown RendererAPI");

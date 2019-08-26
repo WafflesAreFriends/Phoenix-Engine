@@ -1,17 +1,18 @@
 #pragma once
 
-namespace Phoenix {
+#include "RendererAPI.h"
+#include "RenderCommand.h"
 
-	enum class RendererAPI {
-		None = 0, OpenGL = 1, DirectX12 = 2
-	};
+namespace Phoenix {
 
 	class Renderer {
 	public:
-		inline static RendererAPI GetAPI() { return rendererAPI; }
-	private:
+		static void BeginScene(); // Scene params
+		static void EndScene();
 
-		static RendererAPI rendererAPI;
+		static void Submit(const std::shared_ptr<VertexArray>& vertexArray);
+
+		inline static RendererAPI::GraphicsAPI GetGraphicsAPI() { return RendererAPI::GetGraphicsAPI(); }
 	};
 
 }

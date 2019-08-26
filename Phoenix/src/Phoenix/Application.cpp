@@ -6,7 +6,7 @@
 
 #include "Application.h"
 
-#include <glad/glad.h>
+#include "Phoenix/Renderer/Renderer.h"
 
 namespace Phoenix {
 
@@ -29,9 +29,9 @@ namespace Phoenix {
 		vertexArray.reset(VertexArray::Create());
 
 		// Anti Aliasing
-		glEnable(GL_POLYGON_SMOOTH);
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA_SATURATE, GL_ONE);
+		//glEnable(GL_POLYGON_SMOOTH);
+		//glEnable(GL_BLEND);
+		//glBlendFunc(GL_SRC_ALPHA_SATURATE, GL_ONE);
 		
 		// Triangle render
 		float vertices[3 * 7] = {
@@ -148,17 +148,21 @@ namespace Phoenix {
 	*/
 	void Application::Run() {
 		while (running) {
-			glClearColor(0, 0, 0, 0);
-			glClear(GL_COLOR_BUFFER_BIT);
+			RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
+			RenderCommand::Clear();
 
-			shader->Bind();
-			vertexArray->Bind();
-			glDrawElements(GL_TRIANGLES, indexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
+			Renderer::BeginScene();
 
 			shader2->Bind();
-			squareVertexArray->Bind();
-			glDrawElements(GL_TRIANGLES, squareVertexArray->GetIndexBuffers()[0]->GetCount(), GL_UNSIGNED_INT, nullptr);
-			
+			Renderer::Submit(squareVertexArray);
+
+			shader->Bind();
+			Renderer::Submit(vertexArray);
+
+			Renderer::EndScene();
+
+			// Renderer::Flush(); Multi thread
+
 			for (Layer* layer : layerStack) {
 				layer->OnUpdate();
 			}

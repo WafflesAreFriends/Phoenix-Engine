@@ -8,11 +8,11 @@
 namespace Phoenix {
 
 	VertexArray* VertexArray::Create() {
-		switch (Renderer::GetAPI()) {
-		case RendererAPI::None:
+		switch (Renderer::GetGraphicsAPI()) {
+		case RendererAPI::GraphicsAPI::None:
 			PHX_CORE_ASSERT(false, "return nullptr");
 			return nullptr;
-		case RendererAPI::OpenGL:
+		case RendererAPI::GraphicsAPI::OpenGL:
 			return new OpenGLVertexArray();
 		}
 		PHX_CORE_ASSERT(false, "Unknown RendererAPI");
