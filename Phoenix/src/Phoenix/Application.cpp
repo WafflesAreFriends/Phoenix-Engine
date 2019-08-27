@@ -131,8 +131,8 @@ namespace Phoenix {
 			}
 		)";
 		
-		shader.reset(new Shader(vertexSrc, fragmentSrc));
-		shader2.reset(new Shader(vertexSrc2, fragmentSrc2));
+		shader.reset(Shader::Create(vertexSrc, fragmentSrc));
+		shader2.reset(Shader::Create(vertexSrc2, fragmentSrc2));
 	}
 
 	Application::~Application() {
