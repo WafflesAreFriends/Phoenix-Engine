@@ -11,6 +11,8 @@ namespace Phoenix {
 
 		virtual void Bind() const;
 		virtual void Unbind() const;
+
+		virtual void UploadUniformMat4(const std::string& projMatName, const glm::mat4& matrix) override;
 	private:
 		uint32_t rendererID;
 	};

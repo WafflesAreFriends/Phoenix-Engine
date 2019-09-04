@@ -10,7 +10,7 @@ namespace Phoenix {
 	VertexArray* VertexArray::Create() {
 		switch (Renderer::GetGraphicsAPI()) {
 		case RendererAPI::GraphicsAPI::None:
-			PHX_CORE_ASSERT(false, "return nullptr");
+			PHX_CORE_ASSERT(false, "No API Selected");
 			return nullptr;
 		case RendererAPI::GraphicsAPI::OpenGL:
 			return new OpenGLVertexArray();

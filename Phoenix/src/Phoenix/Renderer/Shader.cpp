@@ -9,7 +9,7 @@ namespace Phoenix {
 	Shader* Shader::Create(const std::string & vertexSrc, const std::string & fragmentSrc) {
 		switch (Renderer::GetGraphicsAPI()) {
 		case RendererAPI::GraphicsAPI::None:
-			PHX_CORE_ASSERT(false, "return nullptr");
+			PHX_CORE_ASSERT(false, "No API Selected");
 			return nullptr;
 		case RendererAPI::GraphicsAPI::OpenGL:
 			return new OpenGLShader(vertexSrc, fragmentSrc);

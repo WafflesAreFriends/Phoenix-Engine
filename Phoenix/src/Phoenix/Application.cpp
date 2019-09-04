@@ -1,9 +1,5 @@
 #include "pcheaders.h"
 
-#include <unordered_map>
-
-#include <string>
-
 #include "Application.h"
 
 #include "Phoenix/Renderer/Renderer.h"
@@ -16,7 +12,8 @@ namespace Phoenix {
 	Application* Application::instance = nullptr;
 
 	//	Creates an instance of application, a Window object for rendering, and an ImGuiLayer that is pushed onto the LayerStack.
-	Application::Application() {
+	Application::Application()
+		: camera(-1.6f, 1.6f, -0.9f, 0.9f) {
 		PHX_CORE_ASSERT(instance, "Application exists");
 		instance = this;
 
@@ -80,6 +77,8 @@ namespace Phoenix {
 			
 			layout(location = 0) in vec3 position;
 			layout(location = 1) in vec4 color;
+			
+			uniform mat4 viewProjection;
 
 			out vec3 vPosition;
 			out vec4 vColor;
@@ -87,7 +86,7 @@ namespace Phoenix {
 			void main() {
 				vPosition = position;
 				vColor = color;
-				gl_Position = vec4(position, 1.0);
+				gl_Position = viewProjection * vec4(position, 1.0);
 			}
 		)";
 
@@ -110,11 +109,13 @@ namespace Phoenix {
 			
 			layout(location = 0) in vec3 position;
 
+			uniform mat4 viewProjection;
+
 			out vec3 vPosition;
 			
 			void main() {
 				vPosition = position;
-				gl_Position = vec4(position, 1.0);
+				gl_Position = viewProjection * vec4(position, 1.0);
 			}
 		)";
 
@@ -124,7 +125,7 @@ namespace Phoenix {
 			layout(location = 0) out vec4 color;
 
 			in vec3 vPosition;
-			in vec4 vColor;
+			
 
 			void main() {
 				color = vec4(0.2, 0.3, 0.8, 1.0);
@@ -151,13 +152,14 @@ namespace Phoenix {
 			RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 			RenderCommand::Clear();
 
-			Renderer::BeginScene();
+			camera.SetPosition({ 0.2f, 0.5f, 0.0f });
+			camera.SetRotation(45.0f);
 
-			shader2->Bind();
-			Renderer::Submit(squareVertexArray);
+			Renderer::BeginScene(camera);
 
-			shader->Bind();
-			Renderer::Submit(vertexArray);
+			Renderer::Submit(squareVertexArray, shader2);
+
+			Renderer::Submit(vertexArray, shader);
 
 			Renderer::EndScene();
 

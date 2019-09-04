@@ -12,6 +12,8 @@
 
 #include "Renderer/Shader.h"
 
+#include "Phoenix/Renderer/OrthoCamera.h"
+
 namespace Phoenix {
 
 	class PHX_API Application {
@@ -44,6 +46,8 @@ namespace Phoenix {
 		std::shared_ptr<IndexBuffer> indexBuffer; // Temporary
 
 		std::shared_ptr<VertexArray> squareVertexArray;
+
+		OrthoCamera camera;
 
 		bool running = true;
 	};
