@@ -12,3 +12,9 @@
 #include "Phoenix/imgui/ImGuiLayer.h"
 
 #include "Phoenix/EntryPoint.h"
+
+#include "Phoenix/Renderer/Renderer.h"
+#include "Phoenix/Renderer/Buffer.h"
+#include "Phoenix/Renderer/VertexArray.h"
+#include "Phoenix/Renderer/Shader.h"
+#include "Phoenix/Renderer/OrthoCamera.h"

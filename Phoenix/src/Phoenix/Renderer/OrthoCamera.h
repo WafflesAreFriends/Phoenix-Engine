@@ -9,11 +9,10 @@ namespace Phoenix {
 		OrthoCamera(float left, float right, float bottom, float top); // 1, for near -1 for far provide
 		~OrthoCamera();
 
-		const glm::vec3& GetPosition() const { return position; }
-
 		void SetPosition(const glm::vec3& position) { this->position = position; RecalculateViewMatrix(); }
 		void SetRotation(float rotation) { this->rotation = rotation; RecalculateViewMatrix(); }
 
+		const glm::vec3& GetPosition() const { return position; }
 		float GetRotation() const { return rotation; }
 
 		inline const glm::mat4 GetViewMatrix() const { return viewMatrix; }
