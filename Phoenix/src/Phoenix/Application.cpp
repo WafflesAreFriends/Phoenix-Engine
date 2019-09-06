@@ -23,56 +23,33 @@ namespace Phoenix {
 		imGuiLayer = new ImGuiLayer();
 		PushOverlay(imGuiLayer);
 
-		vertexArray.reset(VertexArray::Create());
-
-		// Anti Aliasing
-		//glEnable(GL_POLYGON_SMOOTH);
-		//glEnable(GL_BLEND);
-		//glBlendFunc(GL_SRC_ALPHA_SATURATE, GL_ONE);
+		triangleVertexArray.reset(VertexArray::Create());
 		
-		// Triangle render
-		float vertices[3 * 7] = {
+		std::shared_ptr<VertexBuffer> triangleVertexBuffer;
+		std::shared_ptr<IndexBuffer> triangleIndexBuffer;
+		////////////////////////////////////////////////////////////////
+		//// Render a triangle ////////////////////////////////////////
+		//////////////////////////////////////////////////////////////
+
+		float triangleVertices[3 * 7] = {
 			-0.5f, -0.5f, 0.0f,	 0.5f, 0.0f, 1.0f, 1.0f,
 			0.5f, -0.5f, 0.0f,	 0.0f, 1.0f, 1.0f, 1.0f,
 			0.0f, 0.5f, 0.0f,	 1.0f, 0.0f, 1.0f, 1.0f,
 		};
-
-		vertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
-		BufferLayout layout = {
+	
+		triangleVertexBuffer.reset(VertexBuffer::Create(triangleVertices, sizeof(triangleVertices)));
+		BufferLayout triangleLayout = {
 			{ ShaderDataType::Float3, "position" },
 			{ ShaderDataType::Float4, "color" }
 		};
-		vertexBuffer->SetLayout(layout);
-		vertexArray->AddVertexBuffer(vertexBuffer);
+		triangleVertexBuffer->SetLayout(triangleLayout);
+		triangleVertexArray->AddVertexBuffer(triangleVertexBuffer);
 
 		uint32_t indices[3] = { 0, 1, 2 };
-		indexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
-		vertexArray->AddIndexBuffer(indexBuffer);
+		triangleIndexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+		triangleVertexArray->AddIndexBuffer(triangleIndexBuffer);
 
-		// Square render
-		squareVertexArray.reset(VertexArray::Create());
-
-		float squareVertices[3 * 4] = {
-			-0.5f, -0.5f, 0.0f,
-			0.5f, -0.5f, 0.0f,
-			0.5f, 0.5f, 0.0f,
-			-0.5f, 0.5f, 0.0f
-		};
-
-		std::shared_ptr<VertexBuffer> squareVertexBuffer;
-		squareVertexBuffer.reset(VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
-		BufferLayout layout2 = {
-			{ ShaderDataType::Float3, "position" },
-		};
-		squareVertexBuffer->SetLayout(layout2);
-		squareVertexArray->AddVertexBuffer(squareVertexBuffer);
-
-		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
-		std::shared_ptr<IndexBuffer> squareIB;
-		squareIB.reset(IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
-		squareVertexArray->AddIndexBuffer(squareIB);
-
-		std::string vertexSrc = R"(
+		std::string triangleVertexSrc = R"(
 			#version 330 core
 			
 			layout(location = 0) in vec3 position;
@@ -90,7 +67,7 @@ namespace Phoenix {
 			}
 		)";
 
-		std::string fragmentSrc = R"(
+		std::string triangleFragmentSrc = R"(
 			#version 330 core
 			
 			layout(location = 0) out vec4 color;
@@ -104,7 +81,33 @@ namespace Phoenix {
 			}
 		)";
 
-		std::string vertexSrc2 = R"(
+		/////////////////////////////////////////////////////////////
+		//// Render a square ////////////////////////////////////////
+		/////////////////////////////////////////////////////////////
+		squareVertexArray.reset(VertexArray::Create());
+
+		float squareVertices[3 * 4] = {
+			-0.5f, -0.5f, 0.0f,
+			0.5f, -0.5f, 0.0f,
+			0.5f, 0.5f, 0.0f,
+			-0.5f, 0.5f, 0.0f
+		};
+
+		std::shared_ptr<VertexBuffer> squareVertexBuffer;
+		std::shared_ptr<IndexBuffer> squareIndexBuffer;
+
+		squareVertexBuffer.reset(VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
+		BufferLayout squareLayout = {
+			{ ShaderDataType::Float3, "position" },
+		};
+		squareVertexBuffer->SetLayout(squareLayout);
+		squareVertexArray->AddVertexBuffer(squareVertexBuffer);
+
+		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
+		squareIndexBuffer.reset(IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
+		squareVertexArray->AddIndexBuffer(squareIndexBuffer);
+
+		std::string squareVertexSrc = R"(
 			#version 330 core
 			
 			layout(location = 0) in vec3 position;
@@ -119,7 +122,7 @@ namespace Phoenix {
 			}
 		)";
 
-		std::string fragmentSrc2 = R"(
+		std::string squareFragmentSrc = R"(
 			#version 330 core
 			
 			layout(location = 0) out vec4 color;
@@ -131,35 +134,36 @@ namespace Phoenix {
 				color = vec4(0.2, 0.3, 0.8, 1.0);
 			}
 		)";
-		
-		shader.reset(Shader::Create(vertexSrc, fragmentSrc));
-		shader2.reset(Shader::Create(vertexSrc2, fragmentSrc2));
+
+		triangleShader.reset(Shader::Create(triangleVertexSrc, triangleFragmentSrc));
+		squareShader.reset(Shader::Create(squareVertexSrc, squareFragmentSrc));
 	}
 
 	Application::~Application() {
 		delete instance;
 	}
 
-	/*
-		- Updates all layers
-		- Updates all ImGuiLayers and renders ImGui to them.
-			NOTE:Because ImGui is an immediate mode API, must be called each time
-			within the render loop. If changed to retained mode API, take out of loop.
-		- Updates window
-	*/
+	////
+	////	- Updates all layers
+	////	- Updates all ImGuiLayers and renders ImGui to them.
+	////		NOTE:Because ImGui is an immediate mode API, must be called each time
+	////		within the render loop. If changed to retained mode API, take out of loop.
+	////	- Updates window
+	////
+
 	void Application::Run() {
 		while (running) {
 			RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 			RenderCommand::Clear();
+			RenderCommand::EnableAntiAliasing();
 
-			camera.SetPosition({ 0.2f, 0.5f, 0.0f });
-			camera.SetRotation(45.0f);
+			camera.SetPosition({ 0.0f, 0.0f, 0.0f });
+			// camera.SetRotation(45.0f);
 
 			Renderer::BeginScene(camera);
 
-			Renderer::Submit(squareVertexArray, shader2);
-
-			Renderer::Submit(vertexArray, shader);
+			Renderer::Submit(squareVertexArray, squareShader);
+			Renderer::Submit(triangleVertexArray, triangleShader);
 
 			Renderer::EndScene();
 

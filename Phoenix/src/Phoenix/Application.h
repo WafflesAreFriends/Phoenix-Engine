@@ -38,14 +38,11 @@ namespace Phoenix {
 		ImGuiLayer* imGuiLayer;
 		LayerStack layerStack;
 
-		std::shared_ptr<Shader> shader;
-		std::shared_ptr<Shader> shader2;
-
-		std::shared_ptr<VertexArray> vertexArray;
-		std::shared_ptr<VertexBuffer> vertexBuffer; // Temporary
-		std::shared_ptr<IndexBuffer> indexBuffer; // Temporary
-
+		std::shared_ptr<VertexArray> triangleVertexArray;
 		std::shared_ptr<VertexArray> squareVertexArray;
+
+		std::shared_ptr<Shader> triangleShader;
+		std::shared_ptr<Shader> squareShader;
 
 		OrthoCamera camera;
 

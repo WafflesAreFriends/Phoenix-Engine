@@ -3,6 +3,7 @@
 
 #include <glad/glad.h>
 
+#include <iostream>
 namespace Phoenix {
 	void OpenGLRendererAPI::SetClearColor(const glm::vec4 & color) {
 		glClearColor(color.r, color.g, color.b, color.a);
@@ -14,5 +15,11 @@ namespace Phoenix {
 
 	void OpenGLRendererAPI::DrawIndexed(const std::shared_ptr<VertexArray>& vertexArray) {
 		glDrawElements(GL_TRIANGLES, vertexArray->GetIndexBuffers()[0]->GetCount(), GL_UNSIGNED_INT, nullptr);
+	}
+
+	void OpenGLRendererAPI::EnableAntiAliasing() {
+		glEnable(GL_POLYGON_SMOOTH);
+		glEnable(GL_BLEND);
+		//glBlendFunc(GL_SRC_ALPHA_SATURATE, GL_ONE);
 	}
 }

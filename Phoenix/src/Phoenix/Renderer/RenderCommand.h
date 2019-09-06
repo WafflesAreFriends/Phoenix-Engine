@@ -14,9 +14,14 @@ namespace Phoenix {
 			rendererAPI->Clear();
 		}
 
+		inline static void EnableAntiAliasing() {
+			rendererAPI->EnableAntiAliasing();
+		}
+
 		inline static void DrawIndexed(const std::shared_ptr<VertexArray>& vertexArray) {
 			rendererAPI->DrawIndexed(vertexArray);
 		}
+
 	private:
 		static RendererAPI* rendererAPI;
 	};
