@@ -4,6 +4,8 @@
 
 #include "Phoenix/Application.h"
 
+#include "Phoenix/Timestep.h"
+
 #include "Phoenix/Input.h"
 #include "Phoenix/KeyCodes.h"
 #include "Phoenix/MouseButtonCodes.h"

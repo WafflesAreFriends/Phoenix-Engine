@@ -2,6 +2,8 @@
 
 #include "Application.h"
 
+#include <glfw/glfw3.h>
+
 namespace Phoenix {
 
 #define BIND_FN_TO_EVENT(x) std::bind(&Application::x, this, std::placeholders::_1)
@@ -35,8 +37,12 @@ namespace Phoenix {
 
 	void Application::Run() {
 		while (running) {
+			float time = glfwGetTime(); // 
+			Timestep ts = time - lastFrameTime;
+			lastFrameTime = time;
+
 			for (Layer* layer : layerStack) {
-				layer->OnUpdate();
+				layer->OnUpdate(ts);
 			}
 
 			// Will be executed in future render thread for multi threading

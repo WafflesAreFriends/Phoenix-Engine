@@ -126,26 +126,25 @@ public:
 	}
 
 	//-- Update per frame --//
-	void OnUpdate() override {
+	void OnUpdate(Timestep ts) override {
+
+		PHX_CORE_INFO("Delta time: {0}", ts.GetSeconds());
 
 		if (Input::IsKeyPressed(PHX_KEY_D)) {
 			PHX_INFO("Camera shifting right.");
-			camPos.x += cameraSpeed;
+			camPos.x += cameraSpeed * ts.GetSeconds();
 		}
 		else if (Input::IsKeyPressed(PHX_KEY_A)) {
 			PHX_INFO("Camera shifting right.");
-			camPos.x -= cameraSpeed;
+			camPos.x -= cameraSpeed * ts.GetSeconds();
 		}
-		else if (Input::IsKeyPressed(PHX_KEY_W)) {
+		if (Input::IsKeyPressed(PHX_KEY_W)) {
 			PHX_INFO("Camera shifting up.");
-			camPos.y += cameraSpeed;
+			camPos.y += cameraSpeed * ts.GetSeconds();
 		}
 		else if (Input::IsKeyPressed(PHX_KEY_S)) {
 			PHX_INFO("Camera shifting down.");
-			camPos.y -= cameraSpeed;
-		}
-		else if (Input::IsMouseButtonPressed(PHX_MOUSE_BUTTON_MIDDLE)) {
-			PHX_INFO("Camera scrolling");
+			camPos.y -= cameraSpeed * ts.GetSeconds();
 		}
 
 		RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
@@ -174,24 +173,8 @@ public:
 
 	//-- Implement event action for this layer --//
 	void OnEvent(Phoenix::Event& event) override {
-		if (event.GetEventType() == Phoenix::EventType::KeyPressed) {
-			Phoenix::KeyPressedEvent& e = (Phoenix::KeyPressedEvent&) event;
-			/*if (e.GetKeyCode() == PHX_KEY_D) {
-				PHX_INFO("Camera shifting right.");
-				camPos.x += cameraSpeed;
-			}
-			else if (e.GetKeyCode() == PHX_KEY_A) {
-				PHX_INFO("Camera shifting left.");
-				camPos.x -= cameraSpeed;
-			}
-			else if (e.GetKeyCode() == PHX_KEY_W) {
-				PHX_INFO("Camera shifting up.");
-				camPos.y += cameraSpeed;
-			}
-			else if (e.GetKeyCode() == PHX_KEY_S) {
-				PHX_INFO("Camera shifting down.");
-				camPos.y -= cameraSpeed;
-			} */
+		if (event.GetEventType() == Phoenix::EventType::MouseScrolled) {
+			
 		}
 	}
 private:
@@ -202,7 +185,7 @@ private:
 	std::shared_ptr<Shader> squareShader;
 
 	OrthoCamera camera;
-	float cameraSpeed = 0.05;
+	float cameraSpeed = 0.2;
 	glm::vec3 camPos;
 };
 

@@ -33,6 +33,8 @@ namespace Phoenix {
 		ImGuiLayer* imGuiLayer;
 		LayerStack layerStack;
 
+		float lastFrameTime = 0.0f;
+
 		bool running = true;
 	};
 
