@@ -8,7 +8,6 @@ namespace Phoenix {
 
 #define BIND_FN_TO_EVENT(x) std::bind(&Application::x, this, std::placeholders::_1)
 
-	// 'instance' is static so it will initially be set to nullptr
 	Application* Application::instance = nullptr;
 
 	//	Creates an instance of application, a Window object for rendering, and an ImGuiLayer that is pushed onto the LayerStack.
@@ -28,11 +27,11 @@ namespace Phoenix {
 	}
 
 	////
-	////	- Updates all layers
-	////	- Updates all ImGuiLayers and renders ImGui to them.
-	////		NOTE:Because ImGui is an immediate mode API, must be called each time
-	////		within the render loop. If changed to retained mode API, take out of loop.
-	////	- Updates window
+	//// Updates all layers.
+	//// Renders ImGuiLayers.
+	//// NOTE:Because ImGui is an immediate mode API, must be called each time
+	////	within the render loop. If changed to retained mode API, take out of loop.
+	//// Updates window
 	////
 
 	void Application::Run() {

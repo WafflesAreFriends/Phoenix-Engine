@@ -3,12 +3,15 @@
 
 #include "imgui/imgui.h"
 
+#include <glm/gtc/matrix_transform.hpp>
+
 using namespace Phoenix;
 
 class ExLayer : public Phoenix::Layer {
 public:
 	ExLayer() : Layer("Example"),
-		camera(-1.6f, 1.6f, -0.9f, 0.9f), camPos(0.0f) {
+		camera(-1.6f, 1.6f, -0.9f, 0.9f),
+		camPos(0.0f) {
 		triangleVertexArray.reset(VertexArray::Create());
 
 		std::shared_ptr<VertexBuffer> triangleVertexBuffer;
@@ -42,6 +45,7 @@ public:
 			layout(location = 1) in vec4 color;
 			
 			uniform mat4 viewProjection;
+			uniform mat4 transform;
 
 			out vec3 vPosition;
 			out vec4 vColor;
@@ -49,7 +53,7 @@ public:
 			void main() {
 				vPosition = position;
 				vColor = color;
-				gl_Position = viewProjection * vec4(position, 1.0);
+				gl_Position = viewProjection * transform * vec4(position, 1.0);
 			}
 		)";
 
@@ -70,6 +74,7 @@ public:
 		/////////////////////////////////////////////////////////////
 		//// Render a square ////////////////////////////////////////
 		/////////////////////////////////////////////////////////////
+
 		squareVertexArray.reset(VertexArray::Create());
 
 		float squareVertices[3 * 4] = {
@@ -99,12 +104,13 @@ public:
 			layout(location = 0) in vec3 position;
 
 			uniform mat4 viewProjection;
+			uniform mat4 transform;
 
 			out vec3 vPosition;
 			
 			void main() {
 				vPosition = position;
-				gl_Position = viewProjection * vec4(position, 1.0);
+				gl_Position = viewProjection * transform * vec4(position, 1.0);
 			}
 		)";
 
@@ -115,7 +121,6 @@ public:
 
 			in vec3 vPosition;
 			
-
 			void main() {
 				color = vec4(0.2, 0.3, 0.8, 1.0);
 			}
@@ -155,7 +160,12 @@ public:
 
 		Renderer::BeginScene(camera);
 
-		Renderer::Submit(squareVertexArray, squareShader);
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(0.5f));
+		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
+		for (int i = 0; i < 5; i++) {
+			Renderer::Submit(squareVertexArray, squareShader, transform * scale);
+		}
+
 		Renderer::Submit(triangleVertexArray, triangleShader);
 
 		Renderer::EndScene();
@@ -187,6 +197,7 @@ private:
 	OrthoCamera camera;
 	float cameraSpeed = 0.2;
 	glm::vec3 camPos;
+
 };
 
 class Sandbox : public Phoenix::Application {
