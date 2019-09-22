@@ -13,6 +13,7 @@ namespace Phoenix {
 		virtual void Unbind() const = 0;
 
 		virtual void UploadUniformMat4(const std::string& projMatName, const glm::mat4& matrix) = 0;
+		virtual void UploadUniformFloat4(const std::string& name, const glm::vec4& values) = 0;
 
 		static Shader* Create(const std::string& vertexSrc, const std::string& fragmentSrc);
 	};

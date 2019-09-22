@@ -121,8 +121,10 @@ public:
 
 			in vec3 vPosition;
 			
+			uniform vec4 u_Color;
+
 			void main() {
-				color = vec4(0.2, 0.3, 0.8, 1.0);
+				color = u_Color;
 			}
 		)";
 
@@ -152,17 +154,33 @@ public:
 			camPos.y -= cameraSpeed * ts.GetSeconds();
 		}
 
+		if (Input::IsKeyPressed(PHX_KEY_Q)) {
+			rotation += 1.0f * ts.GetSeconds();
+		} else if (Input::IsKeyPressed(PHX_KEY_E)) {
+			rotation -= 1.0f * ts.GetSeconds();
+		}
+
 		RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 		RenderCommand::Clear();
 		//RenderCommand::EnableAntiAliasing();
 
 		camera.SetPosition(camPos);
+		camera.SetRotation(rotation);
 
 		Renderer::BeginScene(camera);
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(0.5f));
 		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
+
+		glm::vec4 redColor(0.8f, 0.2f, 0.3f, 1.0f);
+		glm::vec4 blueColor(0.2f, 0.3f, 0.8f, 1.0f);
+
+		// Phoenix::Material* material = new Phoenix::Material(FlatColorShader); 
+		// material->SetColor(, redColor);
+
+		// material->SetTexture();
 		for (int i = 0; i < 5; i++) {
+			squareShader->UploadUniformFloat4("u_Color", redColor);
 			Renderer::Submit(squareVertexArray, squareShader, transform * scale);
 		}
 
@@ -197,7 +215,7 @@ private:
 	OrthoCamera camera;
 	float cameraSpeed = 0.2;
 	glm::vec3 camPos;
-
+	float rotation = 0.0f;
 };
 
 class Sandbox : public Phoenix::Application {
