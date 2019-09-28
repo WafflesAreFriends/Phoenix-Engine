@@ -4,6 +4,7 @@
 #include "imgui/imgui.h"
 
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 using namespace Phoenix;
 
@@ -177,8 +178,11 @@ public:
 
 		// Phoenix::Material* material = new Phoenix::Material(FlatColorShader); 
 		// material->SetColor(, redColor);
-
 		// material->SetTexture();
+
+		std::dynamic_pointer_cast<Phoenix::OpenGLShader>(squareShader)->Bind();
+		//std::dynamic_pointer_cast<Phoenix::OpenGLShader>(squareShader)->UploadUniformFloat3("u_Color");
+
 		for (int i = 0; i < 5; i++) {
 			squareShader->UploadUniformFloat4("u_Color", redColor);
 			Renderer::Submit(squareVertexArray, squareShader, transform * scale);
@@ -194,7 +198,11 @@ public:
 	//-- Implement ImGui here --//
 	void OnImGuiRender() override {
 		bool show = true;
-		ImGui::Begin("Output");
+		ImGui::Begin("Color Settings");
+		
+		ImGui::End();
+
+		ImGui::Begin("TopBar");
 		ImGui::Text("Phoenix Engine Output");
 		ImGui::End();
 	}

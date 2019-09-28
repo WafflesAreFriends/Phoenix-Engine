@@ -27,11 +27,8 @@ namespace Phoenix {
 	}
 
 	////
-	//// Updates all layers.
-	//// Renders ImGuiLayers.
-	//// NOTE:Because ImGui is an immediate mode API, must be called each time
-	////	within the render loop. If changed to retained mode API, take out of loop.
-	//// Updates window
+	//// Updates all layers, ImGuiLayers, window
+	//// NOTE:Because ImGui is an immediate mode API, must be called each time within the render loop. If changed to retained mode API, take out of loop.
 	////
 
 	void Application::Run() {

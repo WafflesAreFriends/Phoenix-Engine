@@ -13,6 +13,7 @@
 #include <unordered_set>
 
 #include "Phoenix/Log.h"
+#include "Platform/OpenGL/OpenGLShader.h"
 
 #ifdef PHX_PLATFORM_WINDOWS
 	#include <Windows.h>
