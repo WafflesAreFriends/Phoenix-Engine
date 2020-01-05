@@ -13,6 +13,6 @@
 [submodule "Phoenix/vendor/GLFW2"]
 	path = Phoenix/vendor/GLFW2
 	url = https://github.com/WafflesAreFriends/glfw.git
-[submodule "Phoenix\\vendor\\glm"]
-	path = Phoenix\\vendor\\glm
+[submodule "Phoenix/vendor/glm"]
+	path = Phoenix/vendor/glm
 	url = https://github.com/g-truc/glm
